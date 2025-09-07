@@ -15,7 +15,7 @@ import yamlParser from "yaml-eslint-parser";
 const jsFiles = ["**/*.cjs", "**/*.js", "**/*.mjs"];
 const tsFiles = ["**/*.ts"];
 const configuration = eslint.defineConfig(
-  eslint.globalIgnores(["**/dist/*", "**/node_modules/*", "**/package-lock.json"]),
+  eslint.globalIgnores(["**/coverages/*", "**/dist/*", "**/node_modules/*", "**/package-lock.json"]),
   {
     languageOptions: {
       globals: {
