@@ -17,6 +17,9 @@
     "npm": "^10"
   },
   "scripts": {
+    "build": "nest build",
+    "dev": "nest start -w",
+    "dev:debug": "nest start -d -w",
     "lint": "eslint **\\*.{cjs,js,json,json5,jsonc,jsonl,md,mjs,ts,yaml,yml}",
     "lint:fix": "eslint --fix **\\*.{cjs,js,json,json5,jsonc,jsonl,md,mjs,ts,yaml,yml}"
   },
