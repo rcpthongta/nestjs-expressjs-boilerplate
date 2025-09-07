@@ -9,6 +9,7 @@
     "fnames",
     "nodenext",
     "preconfigured",
+    "prepush",
     "swcrc"
   ],
   "editor.codeActionsOnSave": {
