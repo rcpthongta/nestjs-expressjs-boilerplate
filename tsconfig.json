@@ -58,6 +58,9 @@
     "noUnusedLocals": true,
     "noUnusedParameters": true,
     "outDir": "./dist",
+    "paths": {
+      "@api": ["./src/app/apis"]
+    },
     "preserveConstEnums": true,
     "preserveSymlinks": false,
     "preserveValueImports": false,
