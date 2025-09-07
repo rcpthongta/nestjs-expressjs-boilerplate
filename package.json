@@ -1,0 +1,19 @@
+{
+  "version": "1.0.0",
+  "name": "nestjs-expressjs-boilerplate",
+  "description": "A minimal NestJS boilerplate using Express.js and Webpack (with SWC), preconfigured for RESTful APIs. Ideal as a starting point for scalable backend applications.",
+  "author": "rcpthongta",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rcpthongta/nestjs-expressjs-boilerplate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/rcpthongta/nestjs-expressjs-boilerplate/issues"
+  },
+  "private": true,
+  "engines": {
+    "node": "^22",
+    "npm": "^10"
+  }
+}
