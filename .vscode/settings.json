@@ -6,8 +6,10 @@
   "cSpell.language": "en-US",
   "cSpell.words": [
     "expressjs",
+    "fnames",
     "nodenext",
-    "preconfigured"
+    "preconfigured",
+    "swcrc"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
