@@ -9,9 +9,11 @@ import yml from "eslint-plugin-yml";
 import eslint from "eslint/config";
 import globals from "globals";
 import jsoncParser from "jsonc-eslint-parser";
+import typescript from "typescript-eslint";
 import yamlParser from "yaml-eslint-parser";
 
 const jsFiles = ["**/*.cjs", "**/*.js", "**/*.mjs"];
+const tsFiles = ["**/*.ts"];
 const configuration = eslint.defineConfig(
   eslint.globalIgnores(["**/node_modules/*", "**/package-lock.json"]),
   {
@@ -24,10 +26,10 @@ const configuration = eslint.defineConfig(
   },
   {
     ...prettier,
-    files: jsFiles
+    files: [...jsFiles, ...tsFiles]
   },
   {
-    files: jsFiles,
+    files: [...jsFiles, ...tsFiles],
     plugins: {
       "unused-imports": unusedImports
     },
@@ -45,7 +47,7 @@ const configuration = eslint.defineConfig(
     }
   },
   {
-    files: jsFiles,
+    files: [...jsFiles, ...tsFiles],
     plugins: {
       promise: promise
     },
@@ -67,10 +69,33 @@ const configuration = eslint.defineConfig(
     }
   },
   {
-    files: jsFiles,
+    files: [...jsFiles, ...tsFiles],
     rules: {
       ...javascript.configs.recommended.rules,
       "no-unused-vars": "off"
+    }
+  },
+  {
+    files: tsFiles,
+    plugins: {
+      "@typescript-eslint": typescript.plugin
+    },
+    extends: [typescript.configs.recommended, typescript.configs.recommendedTypeChecked],
+    languageOptions: {
+      parser: typescript.parser,
+      parserOptions: {
+        project: "tsconfig.json",
+        tsconfigRootDir: import.meta.dirname
+      },
+      sourceType: "module"
+    },
+    rules: {
+      "@typescript-eslint/no-floating-promises": "error",
+      "@typescript-eslint/no-unsafe-argument": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
+      "@typescript-eslint/no-unsafe-call": "off",
+      "@typescript-eslint/no-unsafe-member-access": "off",
+      "@typescript-eslint/no-unused-vars": "off"
     }
   },
   ...jsonc.configs["flat/recommended-with-jsonc"].map((config) => {
