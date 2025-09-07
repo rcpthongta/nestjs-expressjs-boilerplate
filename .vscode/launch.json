@@ -1,0 +1,21 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Application Debug",
+      "type": "node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "npm",
+      "runtimeArgs": [
+        "run",
+        "dev:debug",
+        "--",
+        "--inspect-brk"
+      ],
+      "console": "integratedTerminal",
+      "autoAttachChildProcesses": true,
+      "stopOnEntry": false
+    }
+  ]
+}
