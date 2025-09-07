@@ -17,8 +17,8 @@
     "npm": "^10"
   },
   "scripts": {
-    "lint": "eslint **\\*.{cjs,js,json,json5,jsonc,jsonl,md,mjs,yaml,yml}",
-    "lint:fix": "eslint --fix **\\*.{cjs,js,json,json5,jsonc,jsonl,md,mjs,yaml,yml}"
+    "lint": "eslint **\\*.{cjs,js,json,json5,jsonc,jsonl,md,mjs,ts,yaml,yml}",
+    "lint:fix": "eslint --fix **\\*.{cjs,js,json,json5,jsonc,jsonl,md,mjs,ts,yaml,yml}"
   },
   "devDependencies": {
     "@eslint/js": "9.35.0",
