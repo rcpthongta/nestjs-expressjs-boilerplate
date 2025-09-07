@@ -17,6 +17,9 @@
     "npm": "^10"
   },
   "scripts": {
+    "install:husky": "husky",
+    "precommit": "lint-staged",
+    "prepush": "npm run test:unit && npm run test:integration",
     "build": "cross-env NODE_ENV=development nest build",
     "build:staging": "cross-env NODE_ENV=staging nest build",
     "build:production": "cross-env NODE_ENV=production nest build",
