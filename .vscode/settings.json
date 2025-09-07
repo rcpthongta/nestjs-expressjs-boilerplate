@@ -1,5 +1,5 @@
 {
-  "[javascript][json][json5][jsonc][jsonl][markdown][yaml]": {
+  "[javascript][json][json5][jsonc][jsonl][markdown][typescript][yaml]": {
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "cSpell.ignoreRegExpList": ["/[\\u0E00-\\u0E7F]/g"],
@@ -21,6 +21,7 @@
     "jsonc",
     "jsonl",
     "markdown",
+    "typescript",
     "yaml"
   ]
 }
