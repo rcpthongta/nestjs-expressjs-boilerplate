@@ -1,3 +1,5 @@
+import { environment } from "@environment";
+
 import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter, NestExpressApplication } from "@nestjs/platform-express";
@@ -11,8 +13,9 @@ class Bootstrap {
     try {
       const application: NestExpressApplication = await NestFactory.create(AppModule, new ExpressAdapter());
 
-      await application.listen(3000);
+      await application.listen(environment.server.port);
 
+      this.logger.log(`Running in ${environment.profile} mode`);
       this.logger.log(`Listening on port ${await application.getUrl()}`);
       this.logger.log("Application started successfully");
     } catch (error: unknown) {
