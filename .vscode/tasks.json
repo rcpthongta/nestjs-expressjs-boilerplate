@@ -1,0 +1,47 @@
+{
+  "version": "2.0.0",
+  "tasks": [
+    {
+      "label": "Start Development Mode",
+      "type": "shell",
+      "command": "npm run dev",
+      "group": {
+        "kind": "build",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Build The Application (Development)",
+      "type": "shell",
+      "command": "npm run build",
+      "group": "build"
+    },
+    {
+      "label": "Build The Application (Staging)",
+      "type": "shell",
+      "command": "npm run build:staging",
+      "group": "build"
+    },
+    {
+      "label": "Build The Application (Production)",
+      "type": "shell",
+      "command": "npm run build:production",
+      "group": "build"
+    },
+    {
+      "label": "Test The Application (All Tests)",
+      "type": "shell",
+      "command": "npm run test",
+      "group": {
+        "kind": "test",
+        "isDefault": true
+      }
+    },
+    {
+      "label": "Format and Fix Source Code",
+      "type": "shell",
+      "command": "npm run lint:fix",
+      "group": "none"
+    }
+  ]
+}
