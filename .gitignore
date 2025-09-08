@@ -10,6 +10,10 @@ dist/*
 
 coverages/*
 
+# Documentation directory
+
+docs/*
+
 # Text editor directory and files • Visual Studio Code
 
 .vscode/*
