@@ -11,6 +11,12 @@
       }
     },
     {
+      "label": "Start Documentation",
+      "type": "shell",
+      "command": "npm run dev:docs",
+      "group": "build"
+    },
+    {
       "label": "Build The Application (Development)",
       "type": "shell",
       "command": "npm run build",
