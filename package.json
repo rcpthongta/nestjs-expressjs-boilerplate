@@ -46,8 +46,13 @@
     "@nestjs/core": "11.1.6",
     "@nestjs/platform-express": "11.1.6",
     "joi": "18.0.1",
+    "morgan": "1.10.1",
+    "nanoid": "5.1.5",
+    "nest-winston": "1.10.2",
     "reflect-metadata": "0.2.2",
-    "rxjs": "7.8.2"
+    "rxjs": "7.8.2",
+    "winston": "3.17.0",
+    "winston-daily-rotate-file": "5.0.0"
   },
   "devDependencies": {
     "@commitlint/cli": "19.8.1",
@@ -66,6 +71,7 @@
     "@swc/jest": "0.2.39",
     "@types/express": "5.0.3",
     "@types/jest": "30.0.0",
+    "@types/morgan": "1.9.10",
     "@types/multer": "2.0.0",
     "@types/node": "22.18.1",
     "@types/source-map-support": "0.5.10",
