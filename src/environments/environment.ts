@@ -8,5 +8,8 @@ export const environment: Environment = {
   },
   server: {
     port: Number.parseInt(process.env.SERVER_PORT ?? "8000", 10)
+  },
+  logging: {
+    level: process.env.LOGGING_LEVEL ?? "verbose"
   }
 };
