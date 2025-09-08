@@ -59,7 +59,8 @@
     "noUnusedParameters": true,
     "outDir": "./dist",
     "paths": {
-      "@api": ["./src/app/apis"]
+      "@api": ["./src/app/apis"],
+      "@environment": ["./src/environments"]
     },
     "preserveConstEnums": true,
     "preserveSymlinks": false,
