@@ -15,7 +15,14 @@ import yamlParser from "yaml-eslint-parser";
 const jsFiles = ["**/*.cjs", "**/*.js", "**/*.mjs"];
 const tsFiles = ["**/*.ts"];
 const configuration = eslint.defineConfig(
-  eslint.globalIgnores(["**/coverages/*", "**/dist/*", "**/docs/*", "**/node_modules/*", "**/package-lock.json"]),
+  eslint.globalIgnores([
+    "**/coverages/*",
+    "**/dist/*",
+    "**/docs/*",
+    "**/node_modules/*",
+    "**/.npmrc",
+    "**/package-lock.json"
+  ]),
   {
     languageOptions: {
       globals: {
@@ -101,7 +108,7 @@ const configuration = eslint.defineConfig(
   ...jsonc.configs["flat/recommended-with-jsonc"].map((config) => {
     return {
       ...config,
-      files: ["**/*.json", "**/*.json5", "**/*.jsonc", "**/*.jsonl"],
+      files: ["**/*.*rc", "**/*.json", "**/*.json5", "**/*.jsonc", "**/*.jsonl"],
       languageOptions: {
         parser: jsoncParser,
         parserOptions: {
