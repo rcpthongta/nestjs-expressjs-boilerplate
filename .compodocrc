@@ -1,0 +1,11 @@
+{
+  "$schema": "./node_modules/@compodoc/compodoc/src/config/schema.json",
+  "name": "Application documentation",
+  "tsconfig": "./tsconfig.json",
+  "output": "docs",
+  "serve": true,
+  "port": 8001,
+  "watch": true,
+  "hideGenerator": true,
+  "theme": "stripe"
+}
