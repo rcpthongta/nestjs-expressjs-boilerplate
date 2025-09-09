@@ -60,6 +60,7 @@
     "outDir": "./dist",
     "paths": {
       "@api": ["./src/app/apis"],
+      "@configuration": ["./src/configurations"],
       "@environment": ["./src/environments"]
     },
     "preserveConstEnums": true,
