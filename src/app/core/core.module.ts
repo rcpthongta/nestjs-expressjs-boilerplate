@@ -5,13 +5,28 @@ import { MiddlewareConsumer, Module, NestModule, OnModuleInit, RequestMethod } f
 
 import * as Joi from "joi";
 
+import { Request } from "express";
+import { nanoid } from "nanoid";
+import { ClsModule } from "nestjs-cls";
 import { WinstonModule } from "nest-winston";
 
 import { InvalidEnvironmentException } from "./exceptions";
 import { MorganMiddleware } from "./middlewares";
 
 @Module({
-  imports: [WinstonModule.forRoot({ ...winstonConfiguration })]
+  imports: [
+    WinstonModule.forRoot({ ...winstonConfiguration }),
+    ClsModule.forRoot({
+      global: true,
+      middleware: {
+        mount: true,
+        generateId: true,
+        idGenerator: (request: Request): string => {
+          return request.header("x-request-id") ?? nanoid();
+        }
+      }
+    })
+  ]
 })
 export class CoreModule implements NestModule, OnModuleInit {
   private validEnvironment(): void {
