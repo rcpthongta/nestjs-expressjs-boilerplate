@@ -2,7 +2,7 @@ import { environment } from "@environment";
 
 import * as winston from "winston";
 
-import { levelUpperCase, printf, processId, requestId, skipMessageByContexts } from "./formats";
+import { levelUpperCase, printf, system, requestId, skipMessageByContexts } from "./formats";
 import { file } from "./transports";
 
 const configuration: winston.LoggerOptions = {
@@ -17,7 +17,7 @@ const configuration: winston.LoggerOptions = {
     verbose: 6
   },
   format: winston.format.combine(
-    processId(),
+    system(),
     requestId(),
     skipMessageByContexts({
       list: [
