@@ -4,6 +4,8 @@ import { Logger } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter, NestExpressApplication } from "@nestjs/platform-express";
 
+import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
+
 import { AppModule } from "./app/app.module";
 
 class Bootstrap {
@@ -11,7 +13,11 @@ class Bootstrap {
 
   public static async start(): Promise<void> {
     try {
-      const application: NestExpressApplication = await NestFactory.create(AppModule, new ExpressAdapter());
+      const application: NestExpressApplication = await NestFactory.create(AppModule, new ExpressAdapter(), {
+        bufferLogs: true
+      });
+
+      application.useLogger(application.get(WINSTON_MODULE_NEST_PROVIDER));
 
       await application.listen(environment.server.port);
 
@@ -20,12 +26,10 @@ class Bootstrap {
       this.logger.log("Application started successfully");
     } catch (error: unknown) {
       if (error instanceof Error) {
-        this.logger.error(error.message, error.stack);
-      } else {
-        this.logger.error(error);
+        this.logger.localInstance.fatal?.(error.message, error.stack, Bootstrap.name);
       }
 
-      this.logger.error("Application failed to start");
+      this.logger.localInstance.fatal?.("Application failed to start", null, Bootstrap.name);
     }
   }
 }
