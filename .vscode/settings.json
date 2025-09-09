@@ -10,10 +10,12 @@
     "expressjs",
     "fnames",
     "genexample",
+    "logform",
     "nodenext",
     "preconfigured",
     "prepush",
-    "swcrc"
+    "swcrc",
+    "uncolorize"
   ],
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit"
