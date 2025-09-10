@@ -13,7 +13,7 @@ import { ClsModule } from "nestjs-cls";
 import { WinstonModule } from "nest-winston";
 
 import { InvalidEnvironmentException } from "./exceptions";
-import { CompressionMiddleware, HelmetMiddleware, MorganMiddleware } from "./middlewares";
+import { CompressionMiddleware, HelmetMiddleware, MorganMiddleware, ResponseTime } from "./middlewares";
 
 @Module({
   imports: [
@@ -54,7 +54,7 @@ export class CoreModule implements NestModule, OnModuleInit {
   }
 
   public configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(HelmetMiddleware, CompressionMiddleware, MorganMiddleware).forRoutes({
+    consumer.apply(HelmetMiddleware, CompressionMiddleware, ResponseTime, MorganMiddleware).forRoutes({
       method: RequestMethod.ALL,
       path: "*"
     });
