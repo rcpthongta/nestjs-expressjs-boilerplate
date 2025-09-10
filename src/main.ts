@@ -1,4 +1,4 @@
-import { environment } from "@environment";
+import { Environment, environment } from "@environment";
 
 import { Logger, VersioningType } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
@@ -18,6 +18,7 @@ class Bootstrap {
       const application: NestExpressApplication = await NestFactory.create(AppModule, new ExpressAdapter(), {
         bufferLogs: true
       });
+      const { profile, security, server, swagger }: Environment = environment;
 
       application.useLogger(application.get(WINSTON_MODULE_NEST_PROVIDER));
 
@@ -26,13 +27,16 @@ class Bootstrap {
         defaultVersion: "1"
       });
 
-      if (environment.swagger.enabled) {
+      application.useBodyParser("json", { limit: security.request.jsonLimit });
+      application.useBodyParser("urlencoded", { extended: true, limit: security.request.urlencodedLimit });
+
+      if (swagger.enabled) {
         new Swagger(application).run();
       }
 
-      await application.listen(environment.server.port);
+      await application.listen(server.port);
 
-      this.logger.log(`Running in ${environment.profile} mode`);
+      this.logger.log(`Running in ${profile} mode`);
       this.logger.log(`Listening on port ${await application.getUrl()}`);
       this.logger.log("Application started successfully");
     } catch (error: unknown) {
