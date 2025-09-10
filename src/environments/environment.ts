@@ -10,6 +10,10 @@ export const environment: Environment = {
     port: Number.parseInt(process.env.SERVER_PORT ?? "8000", 10)
   },
   security: {
+    request: {
+      jsonLimit: process.env.SECURITY_REQUEST_JSON_LIMIT ?? "",
+      urlencodedLimit: process.env.SECURITY_REQUEST_URLENCODED_LIMIT ?? ""
+    },
     throttler: {
       ttl: Number.parseInt(process.env.SECURITY_THROTTLER_TTL ?? "60", 10),
       limit: Number.parseInt(process.env.SECURITY_THROTTLER_LIMIT ?? "100", 10)
