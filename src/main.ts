@@ -1,6 +1,6 @@
 import { environment } from "@environment";
 
-import { Logger } from "@nestjs/common";
+import { Logger, VersioningType } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter, NestExpressApplication } from "@nestjs/platform-express";
 
@@ -20,6 +20,11 @@ class Bootstrap {
       });
 
       application.useLogger(application.get(WINSTON_MODULE_NEST_PROVIDER));
+
+      application.enableVersioning({
+        type: VersioningType.URI,
+        defaultVersion: "1"
+      });
 
       if (environment.swagger.enabled) {
         new Swagger(application).run();
