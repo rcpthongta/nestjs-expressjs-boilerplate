@@ -2,7 +2,7 @@ import { Injectable, NestMiddleware } from "@nestjs/common";
 
 import helmet from "helmet";
 
-import { Request, Response, NextFunction, Handler } from "express";
+import { Handler, Request, Response, NextFunction } from "express";
 
 @Injectable()
 export class HelmetMiddleware implements NestMiddleware<Request, Response> {
