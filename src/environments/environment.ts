@@ -10,6 +10,22 @@ export const environment: Environment = {
     port: Number.parseInt(process.env.SERVER_PORT ?? "8000", 10)
   },
   security: {
+    cors: {
+      origins: process.env.SECURITY_CORS_ORIGINS?.split(",")?.map((origin: string): string => {
+        return origin.trim();
+      }) ?? ["*"],
+      methods: process.env.SECURITY_CORS_METHODS?.split(",")?.map((method: string): string => {
+        return method.trim();
+      }) ?? ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
+      allowedHeaders: process.env.SECURITY_CORS_ALLOWED_HEADERS?.split(",")?.map((header: string): string => {
+        return header.trim();
+      }) ?? ["*"],
+      exposedHeaders: process.env.SECURITY_CORS_EXPOSED_HEADERS?.split(",")?.map((header: string): string => {
+        return header.trim();
+      }) ?? ["*"],
+      credentials: process.env.SECURITY_CORS_CREDENTIALS === "true",
+      maxAge: Number.parseInt(process.env.SECURITY_CORS_MAX_AGE ?? "86400", 10)
+    },
     request: {
       jsonLimit: process.env.SECURITY_REQUEST_JSON_LIMIT ?? "",
       urlencodedLimit: process.env.SECURITY_REQUEST_URLENCODED_LIMIT ?? ""

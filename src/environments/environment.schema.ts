@@ -4,6 +4,7 @@ import {
   EnvironmentApplicationSchema,
   EnvironmentLoggingSchema,
   EnvironmentSchema,
+  EnvironmentSecurityCorsSchema,
   EnvironmentSecurityRequestSchema,
   EnvironmentSecuritySchema,
   EnvironmentSecurityThrottlerSchema,
@@ -21,6 +22,14 @@ export const environmentSchema: Joi.ObjectSchema<EnvironmentSchema> = Joi.object
     port: Joi.number().port().required()
   }).required(),
   security: Joi.object<EnvironmentSecuritySchema>({
+    cors: Joi.object<EnvironmentSecurityCorsSchema>({
+      origins: Joi.array<string[]>().items(Joi.string()).required(),
+      methods: Joi.array<string[]>().items(Joi.string()).required(),
+      allowedHeaders: Joi.array<string[]>().items(Joi.string()).required(),
+      exposedHeaders: Joi.array<string[]>().items(Joi.string()).required(),
+      credentials: Joi.boolean().required(),
+      maxAge: Joi.number().integer().required()
+    }).required(),
     request: Joi.object<EnvironmentSecurityRequestSchema>({
       jsonLimit: Joi.string()
         .pattern(/^\d+\s*(b|kb|mb|gb)$/i)
