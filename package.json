@@ -45,6 +45,7 @@
     "@nestjs/common": "11.1.6",
     "@nestjs/core": "11.1.6",
     "@nestjs/platform-express": "11.1.6",
+    "@nestjs/throttler": "6.4.0",
     "joi": "18.0.1",
     "morgan": "1.10.1",
     "nanoid": "5.1.5",
