@@ -13,7 +13,7 @@ import { ClsModule } from "nestjs-cls";
 import { WinstonModule } from "nest-winston";
 
 import { InvalidEnvironmentException } from "./exceptions";
-import { MorganMiddleware } from "./middlewares";
+import { HelmetMiddleware, MorganMiddleware } from "./middlewares";
 
 @Module({
   imports: [
@@ -54,7 +54,10 @@ export class CoreModule implements NestModule, OnModuleInit {
   }
 
   public configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(MorganMiddleware).forRoutes({ method: RequestMethod.ALL, path: "*" });
+    consumer.apply(HelmetMiddleware, MorganMiddleware).forRoutes({
+      method: RequestMethod.ALL,
+      path: "*"
+    });
   }
 
   public onModuleInit(): void {
