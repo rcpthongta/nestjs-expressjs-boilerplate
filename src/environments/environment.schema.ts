@@ -6,7 +6,8 @@ import {
   EnvironmentSchema,
   EnvironmentSecuritySchema,
   EnvironmentSecurityThrottlerSchema,
-  EnvironmentServerSchema
+  EnvironmentServerSchema,
+  EnvironmentSwaggerSchema
 } from "./interfaces";
 
 export const environmentSchema: Joi.ObjectSchema<EnvironmentSchema> = Joi.object<EnvironmentSchema>({
@@ -26,5 +27,8 @@ export const environmentSchema: Joi.ObjectSchema<EnvironmentSchema> = Joi.object
   }).required(),
   logging: Joi.object<EnvironmentLoggingSchema>({
     level: Joi.string().valid("fatal", "error", "warn", "http", "info", "debug", "verbose").required()
+  }).required(),
+  swagger: Joi.object<EnvironmentSwaggerSchema>({
+    enabled: Joi.boolean().required()
   }).required()
 }).required();

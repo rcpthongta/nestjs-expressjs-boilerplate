@@ -17,5 +17,8 @@ export const environment: Environment = {
   },
   logging: {
     level: process.env.LOGGING_LEVEL ?? "verbose"
+  },
+  swagger: {
+    enabled: process.env.SWAGGER_ENABLED === "true"
   }
 };

@@ -6,6 +6,7 @@ import { EnvironmentApplication, EnvironmentApplicationSchema } from "./environm
 import { EnvironmentLogging, EnvironmentLoggingSchema } from "./environment-logging.interface";
 import { EnvironmentSecurity, EnvironmentSecuritySchema } from "./environment-security.interface";
 import { EnvironmentServer, EnvironmentServerSchema } from "./environment-server.interface";
+import { EnvironmentSwagger, EnvironmentSwaggerSchema } from "./environment-swagger.interface";
 
 interface EnvironmentOptions {
   readonly profile: string | Joi.StringSchema;
@@ -13,6 +14,7 @@ interface EnvironmentOptions {
   readonly server: EnvironmentServer | Joi.ObjectSchema<EnvironmentServerSchema>;
   readonly security: EnvironmentSecurity | Joi.ObjectSchema<EnvironmentSecuritySchema>;
   readonly logging: EnvironmentLogging | Joi.ObjectSchema<EnvironmentLoggingSchema>;
+  readonly swagger: EnvironmentSwagger | Joi.ObjectSchema<EnvironmentSwaggerSchema>;
 }
 
 export type Environment = OnlyData<EnvironmentOptions>;
