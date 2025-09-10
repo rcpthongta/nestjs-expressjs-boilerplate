@@ -2,6 +2,8 @@ import { winstonConfiguration } from "@configuration";
 import { environment, environmentSchema, EnvironmentSchema } from "@environment";
 
 import { MiddlewareConsumer, Module, NestModule, OnModuleInit, RequestMethod } from "@nestjs/common";
+import { APP_GUARD } from "@nestjs/core";
+import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 
 import * as Joi from "joi";
 
@@ -25,7 +27,21 @@ import { MorganMiddleware } from "./middlewares";
           return request.header("x-request-id") ?? nanoid();
         }
       }
+    }),
+    ThrottlerModule.forRoot({
+      throttlers: [
+        {
+          ttl: environment.security.throttler.ttl,
+          limit: environment.security.throttler.limit
+        }
+      ]
     })
+  ],
+  providers: [
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard
+    }
   ]
 })
 export class CoreModule implements NestModule, OnModuleInit {
