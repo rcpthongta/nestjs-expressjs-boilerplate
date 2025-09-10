@@ -9,15 +9,18 @@ import { SwaggerTheme, SwaggerThemeNameEnum } from "swagger-themes";
 export class Swagger {
   private readonly logger: Logger = new Logger(Swagger.name);
 
-  private readonly path: string = "api-docs";
-  private readonly pathUI: string = `${this.path}/ui`;
-  private readonly pathJSON: string = `${this.path}/json`;
-  private readonly pathYAML: string = `${this.path}/yaml`;
-
   private readonly application: NestExpressApplication;
+  private readonly path: string;
+  private readonly pathUI: string;
+  private readonly pathJSON: string;
+  private readonly pathYAML: string;
 
   public constructor(application: NestExpressApplication) {
     this.application = application;
+    this.path = "api-docs";
+    this.pathUI = `${this.path}/ui`;
+    this.pathJSON = `${this.path}/json`;
+    this.pathYAML = `${this.path}/yaml`;
   }
 
   public run(): void {
