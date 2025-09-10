@@ -4,6 +4,8 @@ import {
   EnvironmentApplicationSchema,
   EnvironmentLoggingSchema,
   EnvironmentSchema,
+  EnvironmentSecuritySchema,
+  EnvironmentSecurityThrottlerSchema,
   EnvironmentServerSchema
 } from "./interfaces";
 
@@ -15,6 +17,12 @@ export const environmentSchema: Joi.ObjectSchema<EnvironmentSchema> = Joi.object
   }).required(),
   server: Joi.object<EnvironmentServerSchema>({
     port: Joi.number().port().required()
+  }).required(),
+  security: Joi.object<EnvironmentSecuritySchema>({
+    throttler: Joi.object<EnvironmentSecurityThrottlerSchema>({
+      ttl: Joi.number().integer().min(1).required(),
+      limit: Joi.number().integer().min(1).required()
+    })
   }).required(),
   logging: Joi.object<EnvironmentLoggingSchema>({
     level: Joi.string().valid("fatal", "error", "warn", "http", "info", "debug", "verbose").required()
