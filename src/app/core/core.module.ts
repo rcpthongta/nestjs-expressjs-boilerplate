@@ -14,6 +14,7 @@ import { WinstonModule } from "nest-winston";
 
 import { InvalidEnvironmentException } from "./exceptions";
 import { CompressionMiddleware, HelmetMiddleware, MorganMiddleware, ResponseTime } from "./middlewares";
+import { CorsPolicyService } from "./services";
 
 @Module({
   imports: [
@@ -38,6 +39,7 @@ import { CompressionMiddleware, HelmetMiddleware, MorganMiddleware, ResponseTime
     })
   ],
   providers: [
+    CorsPolicyService,
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard
