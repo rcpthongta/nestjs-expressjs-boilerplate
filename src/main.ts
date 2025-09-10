@@ -1,3 +1,4 @@
+import { CorsPolicyService } from "@core";
 import { Environment, environment } from "@environment";
 
 import { Logger, VersioningType } from "@nestjs/common";
@@ -26,6 +27,8 @@ class Bootstrap {
         type: VersioningType.URI,
         defaultVersion: "1"
       });
+
+      application.enableCors(application.get(CorsPolicyService).getConfiguration());
 
       application.useBodyParser("json", { limit: security.request.jsonLimit });
       application.useBodyParser("urlencoded", { extended: true, limit: security.request.urlencodedLimit });
