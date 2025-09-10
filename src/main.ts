@@ -8,6 +8,8 @@ import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
 import { AppModule } from "./app/app.module";
 
+import { Swagger } from "./swagger";
+
 class Bootstrap {
   private static readonly logger: Logger = new Logger(Bootstrap.name);
 
@@ -18,6 +20,10 @@ class Bootstrap {
       });
 
       application.useLogger(application.get(WINSTON_MODULE_NEST_PROVIDER));
+
+      if (environment.swagger.enabled) {
+        new Swagger(application).run();
+      }
 
       await application.listen(environment.server.port);
 
