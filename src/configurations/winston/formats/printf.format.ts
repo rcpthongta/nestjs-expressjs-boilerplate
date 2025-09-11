@@ -14,6 +14,6 @@ export const printf: () => winston.Logform.Format = (): winston.Logform.Format =
       }
     }
 
-    return `${transformable.label} [${transformable.pid} • ${transformable.hostname} • Node.js ${transformable.node}] ${transformable.rid} - ${transformable.timestamp}   ${transformable.level} [${transformable.context}] ${transformable.message} ${transformable.ms}${stack}`;
+    return `${transformable.label} [${transformable.pid} • ${transformable.hostname} (${transformable.platform}) • Node.js ${transformable.node}] ${transformable.rid} - ${transformable.timestamp}   ${transformable.level} [${transformable.context}] ${transformable.message} ${transformable.ms}${stack}`;
   });
 };
