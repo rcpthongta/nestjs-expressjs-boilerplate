@@ -13,7 +13,13 @@ import { ClsModule } from "nestjs-cls";
 import { WinstonModule } from "nest-winston";
 
 import { InvalidEnvironmentException } from "./exceptions";
-import { CompressionMiddleware, HelmetMiddleware, MorganMiddleware, ResponseTime } from "./middlewares";
+import {
+  CompressionMiddleware,
+  HelmetMiddleware,
+  MorganMiddleware,
+  RequestResponseDetailMiddleware,
+  ResponseTime
+} from "./middlewares";
 import { CorsPolicyService } from "./services";
 
 @Module({
@@ -56,10 +62,15 @@ export class CoreModule implements NestModule, OnModuleInit {
   }
 
   public configure(consumer: MiddlewareConsumer): void {
-    consumer.apply(HelmetMiddleware, CompressionMiddleware, ResponseTime, MorganMiddleware).forRoutes({
-      method: RequestMethod.ALL,
-      path: "*"
-    });
+    consumer
+      .apply(
+        HelmetMiddleware,
+        CompressionMiddleware,
+        ResponseTime,
+        ...(environment.profile === "development" ? [RequestResponseDetailMiddleware] : []),
+        MorganMiddleware
+      )
+      .forRoutes({ method: RequestMethod.ALL, path: "*" });
   }
 
   public onModuleInit(): void {
