@@ -62,6 +62,7 @@
       "@api": ["./src/app/apis"],
       "@configuration": ["./src/configurations"],
       "@core": ["./src/app/core"],
+      "@dto": ["./src/app/dtos"],
       "@environment": ["./src/environments"]
     },
     "preserveConstEnums": true,
