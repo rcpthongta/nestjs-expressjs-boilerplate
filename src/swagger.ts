@@ -50,7 +50,8 @@ export class Swagger {
         persistAuthorization: true,
         showCommonExtensions: true,
         showExtensions: true,
-        showMutatedRequest: true
+        showMutatedRequest: true,
+        withCredentials: environment.security.cors.credentials
       },
       customSiteTitle: "API Documentation | OpenAPI (Swagger)",
       customCss: `
