@@ -5,6 +5,7 @@ import { Logger, VersioningType } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter, NestExpressApplication } from "@nestjs/platform-express";
 
+import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
 import { AppModule } from "./app/app.module";
@@ -21,15 +22,14 @@ class Bootstrap {
       });
       const { profile, security, server, swagger }: Environment = environment;
 
-      application.useLogger(application.get(WINSTON_MODULE_NEST_PROVIDER));
+      useContainer(application.select(AppModule), { fallbackOnErrors: true });
 
+      application.useLogger(application.get(WINSTON_MODULE_NEST_PROVIDER));
       application.enableVersioning({
         type: VersioningType.URI,
         defaultVersion: "1"
       });
-
       application.enableCors(application.get(CorsPolicyService).getConfiguration());
-
       application.useBodyParser("json", { limit: security.request.jsonLimit });
       application.useBodyParser("urlencoded", { extended: true, limit: security.request.urlencodedLimit });
 
