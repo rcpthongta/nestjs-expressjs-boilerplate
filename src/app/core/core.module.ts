@@ -1,8 +1,17 @@
 import { winstonConfiguration } from "@configuration";
 import { environment, environmentSchema, EnvironmentSchema } from "@environment";
 
-import { MiddlewareConsumer, Module, NestModule, OnModuleInit, RequestMethod } from "@nestjs/common";
-import { APP_GUARD } from "@nestjs/core";
+import {
+  ClassSerializerInterceptor,
+  HttpStatus,
+  MiddlewareConsumer,
+  Module,
+  NestModule,
+  OnModuleInit,
+  RequestMethod,
+  ValidationPipe
+} from "@nestjs/common";
+import { APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from "@nestjs/core";
 import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 
 import * as Joi from "joi";
@@ -49,6 +58,31 @@ import { CorsPolicyService } from "./services";
     {
       provide: APP_GUARD,
       useClass: ThrottlerGuard
+    },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: ClassSerializerInterceptor
+    },
+    {
+      provide: APP_PIPE,
+      useValue: new ValidationPipe({
+        disableErrorMessages: false,
+        enableDebugMessages: false,
+        errorHttpStatusCode: HttpStatus.BAD_REQUEST,
+        forbidNonWhitelisted: true,
+        forbidUnknownValues: true,
+        skipMissingProperties: false,
+        skipNullProperties: false,
+        skipUndefinedProperties: false,
+        stopAtFirstError: true,
+        transform: true,
+        transformOptions: {
+          enableImplicitConversion: true,
+          excludeExtraneousValues: true
+        },
+        validateCustomDecorators: true,
+        whitelist: true
+      })
     }
   ]
 })
