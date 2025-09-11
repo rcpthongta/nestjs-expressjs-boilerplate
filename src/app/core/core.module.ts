@@ -29,6 +29,7 @@ import {
   RequestResponseDetailMiddleware,
   ResponseTime
 } from "./middlewares";
+import { ResponseWrapperModule } from "./modules";
 import { CorsPolicyService } from "./services";
 
 @Module({
@@ -51,7 +52,8 @@ import { CorsPolicyService } from "./services";
           limit: environment.security.throttler.limit
         }
       ]
-    })
+    }),
+    ResponseWrapperModule
   ],
   providers: [
     CorsPolicyService,
