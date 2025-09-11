@@ -8,6 +8,7 @@ export interface TransformableOptions extends winston.Logform.TransformableInfo 
   ms: string;
   node: string;
   pid: string;
+  platform: string;
   rid: string;
   stack: string | string[];
   timestamp: string;
