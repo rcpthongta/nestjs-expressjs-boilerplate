@@ -63,7 +63,8 @@
       "@configuration": ["./src/configurations"],
       "@core": ["./src/app/core"],
       "@dto": ["./src/app/dtos"],
-      "@environment": ["./src/environments"]
+      "@environment": ["./src/environments"],
+      "@util": ["./src/utils"]
     },
     "preserveConstEnums": true,
     "preserveSymlinks": false,
