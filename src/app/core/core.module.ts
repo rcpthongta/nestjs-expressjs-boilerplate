@@ -1,5 +1,6 @@
 import { winstonConfiguration } from "@configuration";
 import { environment, environmentSchema, EnvironmentSchema } from "@environment";
+import { HttpUtil } from "@util";
 
 import {
   ClassSerializerInterceptor,
@@ -16,9 +17,9 @@ import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 
 import * as Joi from "joi";
 
-import { Request } from "express";
+import { Request, Response } from "express";
 import { nanoid } from "nanoid";
-import { ClsModule } from "nestjs-cls";
+import { ClsModule, ClsService } from "nestjs-cls";
 import { WinstonModule } from "nest-winston";
 
 import { InvalidEnvironmentException } from "./exceptions";
@@ -42,6 +43,9 @@ import { CorsPolicyService } from "./services";
         generateId: true,
         idGenerator: (request: Request): string => {
           return request.header("x-request-id") ?? nanoid();
+        },
+        setup: (cls: ClsService, request: Request, _response: Response): void => {
+          cls.set("languages", HttpUtil.parseAcceptLanguage(request.header("accept-language")));
         }
       }
     }),
