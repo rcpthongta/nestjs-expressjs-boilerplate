@@ -1,31 +1,23 @@
-export class WrapperResponseHttpDto {
+export class WrapperResponseStatusDto {
   public readonly code: number;
   public readonly message: string;
 
-  public constructor(initial: Required<WrapperResponseHttpDto>) {
+  public constructor(initial: Required<WrapperResponseStatusDto>) {
     this.code = initial.code;
     this.message = initial.message;
   }
 }
 
-export class WrapperResponseHeaderDto {
-  public readonly timestamp: string;
-
-  public constructor(initial: Required<WrapperResponseHeaderDto>) {
-    this.timestamp = initial.timestamp;
-  }
-}
-
 export class WrapperResponseDto<T> {
   public readonly success: boolean;
-  public readonly http: WrapperResponseHttpDto;
-  public readonly header: WrapperResponseHeaderDto;
+  public readonly status: WrapperResponseStatusDto;
+  public readonly message: string;
   public readonly payload: T;
 
   public constructor(initial: Required<WrapperResponseDto<T>>) {
     this.success = initial.success;
-    this.http = initial.http;
-    this.header = initial.header;
+    this.status = initial.status;
+    this.message = initial.message;
     this.payload = initial.payload;
   }
 }
