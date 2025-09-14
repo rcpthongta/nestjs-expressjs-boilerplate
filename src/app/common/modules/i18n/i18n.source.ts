@@ -3,7 +3,7 @@ import fspromises from "node:fs/promises";
 import path from "node:path";
 
 import { I18nException } from "./exceptions";
-import { Content, FlattenObjectStack, LanguageResource } from "./models";
+import { FlattenObjectStack, JsonContent, LanguageResource } from "./interfaces";
 import { Dictionary } from "./types";
 
 export class I18nSource {
@@ -63,12 +63,12 @@ export class I18nSource {
     return entries.flatMap((file: fs.Dirent[]): LanguageResource[] => {
       return file
         .filter((entry: fs.Dirent): boolean => entry.isFile())
-        .map((entry: fs.Dirent) => {
-          return new LanguageResource({
+        .map((entry: fs.Dirent): LanguageResource => {
+          return {
             languageName: path.basename(entry.parentPath),
             languagePath: entry.parentPath,
             fileName: entry.name
-          });
+          } satisfies LanguageResource;
         });
     });
   }
@@ -76,17 +76,17 @@ export class I18nSource {
   private flattenObject(json: Record<string, unknown>, parentKey: string): Record<string, string> {
     const result: Record<string, string> = {};
     const stack: FlattenObjectStack[] = [
-      new FlattenObjectStack({
+      {
         obj: json,
         prefix: parentKey
-      })
+      }
     ];
 
     while (stack.length > 0) {
       const { obj, prefix }: FlattenObjectStack = stack.pop()!;
 
       for (const [key, value] of Object.entries(obj)) {
-        const newKey = prefix ? `${prefix}.${key}` : key;
+        const newKey: string = prefix ? `${prefix}.${key}` : key;
 
         if (Array.isArray(value)) {
           throw new I18nException(
@@ -95,7 +95,7 @@ export class I18nSource {
         }
 
         if (value && typeof value === "object") {
-          stack.push(new FlattenObjectStack({ obj: value as Record<string, unknown>, prefix: newKey }));
+          stack.push({ obj: value as Record<string, unknown>, prefix: newKey });
         } else {
           result[newKey] = String(value);
         }
@@ -114,8 +114,8 @@ export class I18nSource {
 
   public async load(): Promise<Dictionary> {
     const resources: LanguageResource[] = await this.getLanguageResource();
-    const promises: Promise<Content>[] = resources.map(
-      async ({ fileName, languageName, languagePath }: LanguageResource): Promise<Content> => {
+    const promises: Promise<JsonContent>[] = resources.map(
+      async ({ fileName, languageName, languagePath }: LanguageResource): Promise<JsonContent> => {
         if (path.extname(fileName) !== this.extension) {
           throw new I18nException(
             `Cannot read the dictionary file "${fileName}" at "${languagePath}". Only files with the "${this.extension}" extension are supported`
@@ -136,16 +136,16 @@ export class I18nSource {
           });
         }
 
-        return new Content({
+        return {
           languageName: languageName,
           json: this.flattenObject(parsed, groupName)
-        });
+        };
       }
     );
-    const contents = await Promise.all(promises);
+    const contents: JsonContent[] = await Promise.all(promises);
 
-    return contents.reduce<Dictionary>((languageMap: Dictionary, contentEntry: Content): Dictionary => {
-      const { json, languageName }: Content = contentEntry;
+    return contents.reduce<Dictionary>((languageMap: Dictionary, contentEntry: JsonContent): Dictionary => {
+      const { json, languageName }: JsonContent = contentEntry;
 
       this.supportedLanguages.add(languageName);
 

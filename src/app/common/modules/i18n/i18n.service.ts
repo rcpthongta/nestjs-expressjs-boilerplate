@@ -5,8 +5,7 @@ import { Inject, Injectable, OnModuleInit } from "@nestjs/common";
 import { ClsService } from "nestjs-cls";
 
 import { TranslateException } from "./exceptions";
-import { TranslateOptions } from "./interfaces";
-import { I18nFallback } from "./models";
+import { I18nModuleFallbackOptions as I18nFallback, TranslateOptions } from "./interfaces";
 import { Dictionary, DictionaryContents, TranslateArgs } from "./types";
 
 import { I18N_FALLBACK, I18N_SOURCE } from "./i18n.constant";

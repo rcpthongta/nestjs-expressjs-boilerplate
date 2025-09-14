@@ -1,7 +1,6 @@
 import { DynamicModule, Module } from "@nestjs/common";
 
 import { I18nModuleOptions } from "./interfaces";
-import { I18nFallback } from "./models";
 
 import { I18N_FALLBACK, I18N_SOURCE } from "./i18n.constant";
 import { I18nService } from "./i18n.service";
@@ -19,7 +18,7 @@ export class I18nModule {
         },
         {
           provide: I18N_FALLBACK,
-          useValue: new I18nFallback(options.fallback)
+          useValue: options.fallback
         },
         I18nService
       ],
