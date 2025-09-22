@@ -1,4 +1,4 @@
-import { I18nService } from "@common";
+import { I18nService, TranslateException } from "@common";
 import { WrapperResponseDto, WrapperResponseStatusDto } from "@dto";
 
 import { CallHandler, ExecutionContext, HttpStatus, Injectable, NestInterceptor } from "@nestjs/common";
@@ -7,6 +7,7 @@ import { Reflector } from "@nestjs/core";
 import { Response } from "express";
 import { map, Observable } from "rxjs";
 
+import { ErrorResponseException } from "./exceptions";
 import { ResponseMessageOptions } from "./interfaces";
 
 import { RESPONSE_MESSAGE_KEY, SKIP_RESPONSE_WRAPPER_KEY } from "./response-wrapper.constant";
@@ -34,10 +35,21 @@ export class ResponseWrapperInterceptor<T> implements NestInterceptor<T, T | Wra
         const translate: ResponseMessageOptions = this.reflector.get(RESPONSE_MESSAGE_KEY, context.getHandler()) ?? {
           key: "response.success.ars000001"
         };
-        const message: string = this.i18n.translate(translate.key, {
-          args: translate?.args,
-          language: translate?.language
-        });
+
+        let message: string;
+
+        try {
+          message = this.i18n.translate(translate.key, {
+            args: translate?.args,
+            language: translate?.language
+          });
+        } catch (error: unknown) {
+          throw new ErrorResponseException((error as TranslateException).message, HttpStatus.INTERNAL_SERVER_ERROR, {
+            responseMessage: {
+              language: "en"
+            }
+          });
+        }
 
         return new WrapperResponseDto({
           success: true,
