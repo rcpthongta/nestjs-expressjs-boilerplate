@@ -1,5 +1,8 @@
 {
   "success": {
     "ars000001": "Success"
+  },
+  "error": {
+    "are000001": "A system error occurred. Please contact support if the issue persists"
   }
 }
