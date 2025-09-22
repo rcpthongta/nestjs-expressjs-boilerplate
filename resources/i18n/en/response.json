@@ -3,6 +3,7 @@
     "ars000001": "Success"
   },
   "error": {
-    "are000001": "A system error occurred. Please contact support if the issue persists"
+    "are000001": "A system error occurred. Please contact support if the issue persists",
+    "are000002": "Access to the requested resource is not permitted. Please try again later or contact support"
   }
 }
