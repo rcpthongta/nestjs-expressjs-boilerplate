@@ -1,3 +1,4 @@
+import { ErrorResponseException } from "@core";
 import { environment, EnvironmentSecurity } from "@environment";
 
 import { HttpStatus, Injectable } from "@nestjs/common";
@@ -14,7 +15,19 @@ export class CorsPolicyService {
         if ((cors.origins.length === 1 && cors.origins.at(0) === "*") || cors.origins.includes(origin)) {
           callback(null, true);
         } else {
-          callback(new Error("Access to this resource from the current origin is blocked by the CORS policy"), false);
+          callback(
+            new ErrorResponseException(
+              "Access to this resource from the current origin is blocked by the CORS policy",
+              HttpStatus.FORBIDDEN,
+              {
+                responseMessage: {
+                  key: "response.error.are000002",
+                  language: "en"
+                }
+              }
+            ),
+            false
+          );
         }
       },
       allowedHeaders: cors.allowedHeaders,
