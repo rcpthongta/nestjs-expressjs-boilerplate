@@ -15,7 +15,7 @@ export class ErrorResponseException extends HttpException {
     this.name = new.target.name;
     this.success = options?.success ?? false;
     this.responseMessage = {
-      key: "response.error.are000001",
+      key: options?.responseMessage?.key ?? "response.error.are000001",
       args: options?.responseMessage?.args,
       language: options?.responseMessage?.language
     };
