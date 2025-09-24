@@ -1,4 +1,4 @@
-import { I18nService, TranslateArgs } from "@common";
+import { I18nService, TranslateArgs, TranslateException } from "@common";
 
 import { HttpStatus, ValidationError } from "@nestjs/common";
 
@@ -33,9 +33,17 @@ export const generateFlatErrors = (errors: ValidationError[], i18n: I18nService)
         const [rawKey, rawArgs]: string[] = message.slice("i18n::".length).split("||");
         const args: TranslateArgs = rawArgs ? JSON.parse(rawArgs) : {};
 
-        return i18n.translate(rawKey, {
-          args: args
-        });
+        try {
+          return i18n.translate(rawKey, {
+            args: args
+          });
+        } catch (error: unknown) {
+          throw new ErrorResponseException((error as TranslateException).message, HttpStatus.INTERNAL_SERVER_ERROR, {
+            responseMessage: {
+              language: "en"
+            }
+          });
+        }
       });
 
       (parent as Record<string, unknown>)[property] = messages.length > 1 ? messages : messages[0];
