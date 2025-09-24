@@ -1,4 +1,5 @@
 export * from "./exceptions";
+export * from "./functions";
 export * from "./interfaces";
 export * from "./types";
 
