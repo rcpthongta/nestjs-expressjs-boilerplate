@@ -5,6 +5,10 @@ import { Logger, VersioningType } from "@nestjs/common";
 import { NestFactory } from "@nestjs/core";
 import { ExpressAdapter, NestExpressApplication } from "@nestjs/platform-express";
 
+import compression from "compression";
+import helmet from "helmet";
+import responseTime from "response-time";
+
 import { useContainer } from "class-validator";
 import { WINSTON_MODULE_NEST_PROVIDER } from "nest-winston";
 
@@ -32,6 +36,9 @@ class Bootstrap {
       application.enableCors(application.get(CorsPolicyService).getConfiguration());
       application.useBodyParser("json", { limit: security.request.jsonLimit });
       application.useBodyParser("urlencoded", { extended: true, limit: security.request.urlencodedLimit });
+      application.use(helmet());
+      application.use(compression());
+      application.use(responseTime());
 
       if (swagger.enabled) {
         new Swagger(application).run();
