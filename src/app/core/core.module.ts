@@ -26,13 +26,7 @@ import { WinstonModule } from "nest-winston";
 
 import { InvalidEnvironmentException } from "./exceptions";
 import { validationExceptionFactory } from "./functions";
-import {
-  CompressionMiddleware,
-  HelmetMiddleware,
-  MorganMiddleware,
-  RequestResponseDetailMiddleware,
-  ResponseTime
-} from "./middlewares";
+import { MorganMiddleware, RequestResponseDetailMiddleware } from "./middlewares";
 import { ResponseWrapperModule } from "./modules";
 import { CorsPolicyService } from "./services";
 
@@ -109,13 +103,7 @@ export class CoreModule implements NestModule, OnModuleInit {
 
   public configure(consumer: MiddlewareConsumer): void {
     consumer
-      .apply(
-        HelmetMiddleware,
-        CompressionMiddleware,
-        ResponseTime,
-        ...(environment.profile === "development" ? [RequestResponseDetailMiddleware] : []),
-        MorganMiddleware
-      )
+      .apply(...(environment.profile === "development" ? [RequestResponseDetailMiddleware] : []), MorganMiddleware)
       .forRoutes({ method: RequestMethod.ALL, path: "*" });
   }
 
