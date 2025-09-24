@@ -1,3 +1,4 @@
+import { I18nService } from "@common";
 import { winstonConfiguration } from "@configuration";
 import { environment, environmentSchema, EnvironmentSchema } from "@environment";
 import { HttpUtil } from "@util";
@@ -10,6 +11,7 @@ import {
   NestModule,
   OnModuleInit,
   RequestMethod,
+  ValidationError,
   ValidationPipe
 } from "@nestjs/common";
 import { APP_GUARD, APP_INTERCEPTOR, APP_PIPE } from "@nestjs/core";
@@ -23,6 +25,7 @@ import { ClsModule, ClsService } from "nestjs-cls";
 import { WinstonModule } from "nest-winston";
 
 import { InvalidEnvironmentException } from "./exceptions";
+import { validationExceptionFactory } from "./functions";
 import {
   CompressionMiddleware,
   HelmetMiddleware,
@@ -71,24 +74,27 @@ import { CorsPolicyService } from "./services";
     },
     {
       provide: APP_PIPE,
-      useValue: new ValidationPipe({
-        disableErrorMessages: false,
-        enableDebugMessages: false,
-        errorHttpStatusCode: HttpStatus.BAD_REQUEST,
-        forbidNonWhitelisted: true,
-        forbidUnknownValues: true,
-        skipMissingProperties: false,
-        skipNullProperties: false,
-        skipUndefinedProperties: false,
-        stopAtFirstError: true,
-        transform: true,
-        transformOptions: {
-          enableImplicitConversion: true,
-          excludeExtraneousValues: true
-        },
-        validateCustomDecorators: true,
-        whitelist: true
-      })
+      inject: [I18nService],
+      useFactory: (i18n: I18nService): ValidationPipe => {
+        return new ValidationPipe({
+          disableErrorMessages: false,
+          enableDebugMessages: false,
+          errorHttpStatusCode: HttpStatus.BAD_REQUEST,
+          exceptionFactory: (errors: ValidationError[]): void => validationExceptionFactory(errors, i18n),
+          forbidNonWhitelisted: true,
+          forbidUnknownValues: true,
+          skipMissingProperties: false,
+          skipNullProperties: false,
+          skipUndefinedProperties: false,
+          transform: true,
+          transformOptions: {
+            enableImplicitConversion: true,
+            excludeExtraneousValues: true
+          },
+          validateCustomDecorators: true,
+          whitelist: true
+        });
+      }
     }
   ]
 })
