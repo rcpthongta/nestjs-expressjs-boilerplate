@@ -2,42 +2,46 @@ import { environment } from "@environment";
 
 import { Logger } from "@nestjs/common";
 import { NestExpressApplication } from "@nestjs/platform-express";
-import { DocumentBuilder, OpenAPIObject, SwaggerModule } from "@nestjs/swagger";
+import { DocumentBuilder, OpenAPIObject, SwaggerCustomOptions, SwaggerModule } from "@nestjs/swagger";
 
 import { SwaggerTheme, SwaggerThemeNameEnum } from "swagger-themes";
 
 export class Swagger {
   private readonly logger: Logger = new Logger(Swagger.name);
 
-  private readonly application: NestExpressApplication;
-  private readonly path: string;
-  private readonly pathUI: string;
-  private readonly pathJSON: string;
-  private readonly pathYAML: string;
+  private readonly path: string = "api-docs";
+  private readonly theme: SwaggerTheme = new SwaggerTheme();
 
-  public constructor(application: NestExpressApplication) {
-    this.application = application;
-    this.path = "api-docs";
-    this.pathUI = `${this.path}/ui`;
-    this.pathJSON = `${this.path}/json`;
-    this.pathYAML = `${this.path}/yaml`;
+  private readonly application: NestExpressApplication;
+
+  private get pathUI(): string {
+    return `${this.path}/ui`;
   }
 
-  public run(): void {
-    const builder: DocumentBuilder = new DocumentBuilder();
-    const theme: SwaggerTheme = new SwaggerTheme();
-    const configuration: Omit<OpenAPIObject, "paths"> = builder
+  private get pathJSON(): string {
+    return `${this.path}/json`;
+  }
+
+  private get pathYAML(): string {
+    return `${this.path}/yaml`;
+  }
+
+  private createDocument(): OpenAPIObject {
+    const configuration: Omit<OpenAPIObject, "paths"> = new DocumentBuilder()
       .setVersion(environment.application.version)
       .setTitle(environment.application.name)
       .setDescription("API Documentation")
       .build();
-    const document: OpenAPIObject = SwaggerModule.createDocument(this.application, configuration, {
+
+    return SwaggerModule.createDocument(this.application, configuration, {
       autoTagControllers: true,
       deepScanRoutes: true,
       ignoreGlobalPrefix: false
     });
+  }
 
-    SwaggerModule.setup(this.pathUI, this.application, document, {
+  private createSwaggerOptions(): SwaggerCustomOptions {
+    return {
       jsonDocumentUrl: this.pathJSON,
       yamlDocumentUrl: this.pathYAML,
       raw: ["json"],
@@ -55,7 +59,7 @@ export class Swagger {
       },
       customSiteTitle: "API Documentation | OpenAPI (Swagger)",
       customCss: `
-        ${theme.getBuffer(SwaggerThemeNameEnum.FLATTOP)}
+        ${this.theme.getBuffer(SwaggerThemeNameEnum.FLATTOP)}
 
         .parameters-col_name {
           min-width: 30em;
@@ -68,7 +72,18 @@ export class Swagger {
         }
       `,
       useGlobalPrefix: false
-    });
+    };
+  }
+
+  public constructor(application: NestExpressApplication) {
+    this.application = application;
+  }
+
+  public run(): void {
+    const document: OpenAPIObject = this.createDocument();
+    const options: SwaggerCustomOptions = this.createSwaggerOptions();
+
+    SwaggerModule.setup(this.pathUI, this.application, document, options);
 
     this.logger.log(`UI {/${this.pathUI}}:`);
     this.logger.log(`Json {/${this.pathJSON}}:`);
