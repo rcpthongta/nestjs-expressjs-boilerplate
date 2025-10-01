@@ -4,14 +4,14 @@ import { FormatException } from "./exceptions";
 import { FormatArgs, FormatTransformers } from "./types";
 
 export class StringUtil {
-  private static shouldApplyTransformers(transformers?: FormatTransformers | null): transformers is FormatTransformers {
-    return transformers !== null && transformers !== undefined && Object.keys(transformers).length > 0;
+  private static shouldApplyTransformers(transformer?: FormatTransformers | null): transformer is FormatTransformers {
+    return transformer !== null && transformer !== undefined && Object.keys(transformer).length > 0;
   }
 
-  public static format(template: string, args: FormatArgs, transformers?: FormatTransformers | null): string {
+  public static format(template: string, args: FormatArgs, transformer?: FormatTransformers | null): string {
     try {
-      return this.shouldApplyTransformers(transformers)
-        ? stringFormat.create(transformers)(template, ...args)
+      return this.shouldApplyTransformers(transformer)
+        ? stringFormat.create(transformer)(template, ...args)
         : stringFormat(template, ...args);
     } catch (error: unknown) {
       throw new FormatException(error);
