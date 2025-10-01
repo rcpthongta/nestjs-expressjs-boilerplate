@@ -84,7 +84,7 @@
     "strictPropertyInitialization": true,
     "suppressExcessPropertyErrors": false,
     "suppressImplicitAnyIndexErrors": false,
-    "target": "ES2023",
+    "target": "es2023",
     "useUnknownInCatchVariables": true,
     "verbatimModuleSyntax": false
   }
