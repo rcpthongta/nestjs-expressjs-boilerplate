@@ -6,9 +6,9 @@ import tsJest from "ts-jest";
 const configuration = {
   rootDir: ".",
   testEnvironment: "node",
-  testRegex: ".e2e-spec.ts$",
+  testRegex: ".e2e-spec.(js|ts)$",
   transform: {
-    "^.+\\.(t|j)s$": [
+    "^.+\\.(js|ts)$": [
       "@swc/jest",
       {
         ...JSON.parse(fs.readFileSync(path.resolve(".swcrc"), "utf8"))
@@ -22,6 +22,11 @@ const configuration = {
       prefix: path.resolve()
     }
   ),
+  clearMocks: true,
+  maxWorkers: 1,
+  forceExit: true,
+  testTimeout: 30000,
+  detectOpenHandles: true,
   verbose: true
 };
 
