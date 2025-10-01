@@ -27,6 +27,7 @@ const configuration = {
   collectCoverageFrom: ["**/*.(js|ts)"],
   coverageProvider: "v8",
   coveragePathIgnorePatterns: [
+    "/environments/",
     "\\.integration-spec\\.(js|ts)$",
     "\\.constant\\.(js|ts)$",
     "\\.dto\\.(js|ts)$",
