@@ -1,1 +1,1 @@
-export * from "./format-args.type";
+export * from "./format.type";
