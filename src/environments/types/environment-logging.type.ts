@@ -1,10 +1,11 @@
 import * as Joi from "joi";
 
-import { OnlyData, OnlySchema } from "../types";
+import { OnlyData } from "./only-data.type";
+import { OnlySchema } from "./only-schema.type";
 
-interface EnvironmentLoggingOptions {
+type EnvironmentLoggingOptions = {
   readonly level: string | Joi.StringSchema;
-}
+};
 
 export type EnvironmentLogging = OnlyData<EnvironmentLoggingOptions>;
 export type EnvironmentLoggingSchema = OnlySchema<EnvironmentLoggingOptions>;

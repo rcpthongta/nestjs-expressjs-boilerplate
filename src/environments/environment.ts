@@ -1,4 +1,4 @@
-import { Environment } from "./interfaces";
+import { Environment } from "./types";
 
 export const environment: Environment = {
   profile: process.env.NESTJS_PROFILE ?? "development",

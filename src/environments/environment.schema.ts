@@ -10,7 +10,7 @@ import {
   EnvironmentSecurityThrottlerSchema,
   EnvironmentServerSchema,
   EnvironmentSwaggerSchema
-} from "./interfaces";
+} from "./types";
 
 export const environmentSchema: Joi.ObjectSchema<EnvironmentSchema> = Joi.object<EnvironmentSchema>({
   profile: Joi.string().valid("development", "staging", "production").required(),
