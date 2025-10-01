@@ -6,8 +6,16 @@ describe("HttpUtil (Unit)", (): void => {
   });
 
   describe("Success cases", (): void => {
-    it("should parse accept language header", (): void => {
+    it("should correctly parse 'Accept-Language' header with multiple languages and quality values", (): void => {
       expect(HttpUtil.parseAcceptLanguage("en-US,en;q=0.9")).toEqual(["en-US", "en"]);
+    });
+
+    it("should parse single language without region and quality value", (): void => {
+      expect(HttpUtil.parseAcceptLanguage("fr;q=0.9")).toEqual(["fr"]);
+    });
+
+    it("should parse and sort languages by descending quality values", (): void => {
+      expect(HttpUtil.parseAcceptLanguage("es;q=0.3, fr;q=0.9, en;q=0.5")).toEqual(["fr", "en", "es"]);
     });
 
     it.each([
@@ -23,8 +31,8 @@ describe("HttpUtil (Unit)", (): void => {
         description: "should return null if accept-language header is empty",
         input: ""
       }
-    ])("$description", (arg): void => {
-      expect(HttpUtil.parseAcceptLanguage(arg.input)).toBeNull();
+    ])("$description", ({ input }): void => {
+      expect(HttpUtil.parseAcceptLanguage(input)).toBeNull();
     });
   });
 });
