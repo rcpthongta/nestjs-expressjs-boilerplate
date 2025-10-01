@@ -67,7 +67,7 @@ export class I18nService implements OnModuleInit {
     const data: FormatArgs =
       typeof args === "string" || (typeof args === "object" && !Array.isArray(args)) ? [args] : args;
 
-    return StringUtil.format(message, ...data);
+    return StringUtil.format(message, data);
   }
 
   public constructor(
