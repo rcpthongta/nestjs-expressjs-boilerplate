@@ -1,7 +1,8 @@
 import stringFormat from "string-format";
 
 import { FormatException } from "./exceptions";
-import { FormatArgs, FormatTransformers } from "./types";
+import { FormatTransformers } from "./interfaces";
+import { FormatArgs } from "./types";
 
 export class StringUtil {
   private static shouldApplyTransformers(transformer?: FormatTransformers | null): transformer is FormatTransformers {

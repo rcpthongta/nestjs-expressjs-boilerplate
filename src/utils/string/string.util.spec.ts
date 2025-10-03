@@ -1,7 +1,8 @@
 import { FormatException } from "./exceptions";
+import { FormatTransformers } from "./interfaces";
+import { FormatArgs } from "./types";
 
 import { StringUtil } from "./string.util";
-import { FormatArgs, FormatTransformers } from "./types";
 
 interface FormatTestCase {
   description: string;
