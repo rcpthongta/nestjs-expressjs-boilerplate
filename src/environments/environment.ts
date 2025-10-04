@@ -11,18 +11,21 @@ export const environment: Environment = {
   },
   security: {
     cors: {
-      origins: process.env.SECURITY_CORS_ORIGINS?.split(",")?.map((origin: string): string => {
-        return origin.trim();
-      }) ?? ["*"],
-      methods: process.env.SECURITY_CORS_METHODS?.split(",")?.map((method: string): string => {
-        return method.trim();
-      }) ?? ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
-      allowedHeaders: process.env.SECURITY_CORS_ALLOWED_HEADERS?.split(",")?.map((header: string): string => {
-        return header.trim();
-      }) ?? ["*"],
-      exposedHeaders: process.env.SECURITY_CORS_EXPOSED_HEADERS?.split(",")?.map((header: string): string => {
-        return header.trim();
-      }) ?? ["*"],
+      origins: process.env.SECURITY_CORS_ORIGINS?.split(",")?.map((origin: string): string => origin.trim()) ?? ["*"],
+      methods: process.env.SECURITY_CORS_METHODS?.split(",")?.map((method: string): string => method.trim()) ?? [
+        "GET",
+        "POST",
+        "PUT",
+        "PATCH",
+        "DELETE",
+        "OPTIONS"
+      ],
+      allowedHeaders: process.env.SECURITY_CORS_ALLOWED_HEADERS?.split(",")?.map((header: string): string =>
+        header.trim()
+      ) ?? ["*"],
+      exposedHeaders: process.env.SECURITY_CORS_EXPOSED_HEADERS?.split(",")?.map((header: string): string =>
+        header.trim()
+      ) ?? ["*"],
       credentials: process.env.SECURITY_CORS_CREDENTIALS === "true",
       maxAge: Number.parseInt(process.env.SECURITY_CORS_MAX_AGE ?? "86400", 10)
     },
