@@ -47,10 +47,7 @@ class Bootstrap {
       this.logger.log(`Listening on port ${await application.getUrl()}`);
       this.logger.log("Application started successfully");
     } catch (error: unknown) {
-      if (error instanceof Error) {
-        this.logger.localInstance.fatal?.(error.message, error.stack, Bootstrap.name);
-      }
-
+      this.logger.localInstance.fatal?.(error, null, Bootstrap.name);
       this.logger.localInstance.fatal?.("Application failed to start", null, Bootstrap.name);
     }
   }
