@@ -29,6 +29,7 @@ const configuration = {
   coveragePathIgnorePatterns: [
     "/environments/",
     "\\.integration-spec\\.(js|ts)$",
+    "\\.configuration\\.(js|ts)$",
     "\\.constant\\.(js|ts)$",
     "\\.dto\\.(js|ts)$",
     "\\.exception\\.(js|ts)$",
