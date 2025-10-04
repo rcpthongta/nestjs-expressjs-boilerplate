@@ -5,10 +5,10 @@ import { ClsServiceManager } from "nestjs-cls";
 
 import { TransformableOptions } from "../interfaces";
 
-export const requestId: () => winston.Logform.Format = (): winston.Logform.Format => {
+export function requestId(): winston.Logform.Format {
   return winston.format((transformable: TransformableOptions): TransformableOptions => {
     transformable.rid = ClsServiceManager.getClsService().getId() ?? nanoid();
 
     return transformable;
   })();
-};
+}

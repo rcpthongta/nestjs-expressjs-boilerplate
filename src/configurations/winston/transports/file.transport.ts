@@ -7,9 +7,7 @@ import * as winston from "winston";
 import { printf, skipMessageByContexts, skipMessageByLevels } from "../formats";
 import { FileOptions } from "../interfaces";
 
-export const file: (options: FileOptions) => WinstonDailyRotateFile = (
-  options: FileOptions
-): WinstonDailyRotateFile => {
+export function file(options: FileOptions): WinstonDailyRotateFile {
   return new WinstonDailyRotateFile({
     level: options.level,
     format: winston.format.combine(
@@ -35,4 +33,4 @@ export const file: (options: FileOptions) => WinstonDailyRotateFile = (
     maxFiles: options.maxFiles,
     maxSize: options.maxSize
   });
-};
+}
