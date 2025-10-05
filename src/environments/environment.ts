@@ -12,14 +12,7 @@ export const environment: Environment = {
   security: {
     cors: {
       origins: process.env.SECURITY_CORS_ORIGINS?.split(",")?.map((origin: string): string => origin.trim()) ?? ["*"],
-      methods: process.env.SECURITY_CORS_METHODS?.split(",")?.map((method: string): string => method.trim()) ?? [
-        "GET",
-        "POST",
-        "PUT",
-        "PATCH",
-        "DELETE",
-        "OPTIONS"
-      ],
+      methods: process.env.SECURITY_CORS_METHODS?.split(",")?.map((method: string): string => method.trim()) ?? ["*"],
       allowedHeaders: process.env.SECURITY_CORS_ALLOWED_HEADERS?.split(",")?.map((header: string): string =>
         header.trim()
       ) ?? ["*"],
