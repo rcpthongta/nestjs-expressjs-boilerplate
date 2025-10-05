@@ -20,18 +20,18 @@ describe("HttpUtil (Unit)", (): void => {
 
     it.each([
       {
-        description: "should return null if accept-language header is undefined",
+        name: "should return null if accept-language header is undefined",
         input: undefined
       },
       {
-        description: "should return null if accept-language header is null",
+        name: "should return null if accept-language header is null",
         input: null
       },
       {
-        description: "should return null if accept-language header is empty",
+        name: "should return null if accept-language header is empty",
         input: ""
       }
-    ])("$description", ({ input }): void => {
+    ])("$name", ({ input }): void => {
       expect(HttpUtil.parseAcceptLanguage(input)).toBeNull();
     });
   });
