@@ -1,3 +1,5 @@
+import { TransformersArg } from "../types";
+
 export interface FormatTransformers {
-  [key: string]: (arg: string | number | boolean) => string;
+  [key: string]: (arg: TransformersArg) => string;
 }
