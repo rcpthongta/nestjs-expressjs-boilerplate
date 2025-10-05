@@ -8,26 +8,23 @@ describe("levelUpperCase (Unit)", (): void => {
 
     it.each([
       {
-        description: "convert lowercase level to uppercase with appropriate padding",
+        name: "should convert lowercase level to uppercase with appropriate padding",
         input: { level: "info" },
         expected: "   INFO"
       },
       {
-        description: "not pad level if it is already 7 or more characters",
+        name: "should not pad level if it is already 7 or more characters",
         input: { level: "verbose" },
         expected: "VERBOSE"
       },
       {
-        description: "preserve uppercase level formatting with appropriate padding",
+        name: "should preserve uppercase level formatting with appropriate padding",
         input: { level: "ERROR" },
         expected: "  ERROR"
       }
-    ])("should $description", ({ input, expected }): void => {
+    ])("$name", ({ input, expected }): void => {
       expect(format.transform({ ...input, message: "Test" })).toEqual(
-        expect.objectContaining({
-          level: expected,
-          message: "Test"
-        })
+        expect.objectContaining({ level: expected, message: "Test" })
       );
     });
   });
