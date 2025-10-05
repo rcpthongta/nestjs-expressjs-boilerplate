@@ -15,8 +15,17 @@ describe("skipMessageByContexts (Unit)", (): void => {
       expect(output).toBeFalsy();
     });
 
-    it("should allow log message if context is not in skip list", (): void => {
-      const format: winston.Logform.Format = skipMessageByContexts({ list: [] });
+    it.each([
+      {
+        name: "should allow log message if context does not match any item in skip list",
+        list: ["Test"]
+      },
+      {
+        name: "should allow log message if context is not in skip list",
+        list: []
+      }
+    ])("$name", ({ list }): void => {
+      const format: winston.Logform.Format = skipMessageByContexts({ list });
       const input: winston.Logform.TransformableInfo = {
         level: "info",
         message: "Test",
