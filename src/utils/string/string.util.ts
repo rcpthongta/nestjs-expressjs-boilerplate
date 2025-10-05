@@ -5,8 +5,8 @@ import { FormatTransformers } from "./interfaces";
 import { FormatArgs } from "./types";
 
 export class StringUtil {
-  private static shouldApplyTransformers(transformer?: FormatTransformers | null): transformer is FormatTransformers {
-    return transformer !== null && transformer !== undefined && Object.keys(transformer).length > 0;
+  private static shouldApplyTransformers(transformer?: FormatTransformers): transformer is FormatTransformers {
+    return transformer !== undefined && Object.keys(transformer).length > 0;
   }
 
   /**
@@ -26,7 +26,7 @@ export class StringUtil {
    * StringUtil.format("My name is {name}", [{ name: "John" }]); // -> "My name is John"
    * StringUtil.format("Upper: {0!upper}", ["hello"], { upper: (arg: string | number | boolean): string => String(arg).toUpperCase() }) -> // "Upper: HELLO";
    */
-  public static format(template: string, args: FormatArgs, transformer?: FormatTransformers | null): string {
+  public static format(template: string, args: FormatArgs, transformer?: FormatTransformers): string {
     try {
       return this.shouldApplyTransformers(transformer)
         ? stringFormat.create(transformer)(template, ...args)
