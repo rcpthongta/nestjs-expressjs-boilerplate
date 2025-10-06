@@ -5,8 +5,8 @@ import { skipMessageByContexts } from "./skip-message-by-contexts.format";
 describe("skipMessageByContexts (Unit)", (): void => {
   describe("Success cases", (): void => {
     it("should skip log message if context is in skip list", (): void => {
-      const format: winston.Logform.Format = skipMessageByContexts({ list: ["Bootstrap"] });
-      const output: boolean | winston.Logform.TransformableInfo = format.transform({
+      const formatter: winston.Logform.Format = skipMessageByContexts({ list: ["Bootstrap"] });
+      const output: boolean | winston.Logform.TransformableInfo = formatter.transform({
         level: "info",
         message: "Test",
         context: "Bootstrap"
@@ -25,13 +25,13 @@ describe("skipMessageByContexts (Unit)", (): void => {
         list: []
       }
     ])("$name", ({ list }): void => {
-      const format: winston.Logform.Format = skipMessageByContexts({ list });
+      const formatter: winston.Logform.Format = skipMessageByContexts({ list });
       const input: winston.Logform.TransformableInfo = {
         level: "info",
         message: "Test",
         context: "Bootstrap"
       };
-      const output: boolean | winston.Logform.TransformableInfo = format.transform(input);
+      const output: boolean | winston.Logform.TransformableInfo = formatter.transform(input);
 
       expect(output).toEqual(expect.objectContaining(input));
     });
@@ -50,13 +50,13 @@ describe("skipMessageByContexts (Unit)", (): void => {
         context: "empty"
       }
     ])("should allow log message if context is $description", ({ context }): void => {
-      const format: winston.Logform.Format = skipMessageByContexts({ list: ["Bootstrap"] });
+      const formatter: winston.Logform.Format = skipMessageByContexts({ list: ["Bootstrap"] });
       const input: winston.Logform.TransformableInfo = {
         level: "warn",
         message: "Something happened",
         context
       };
-      const output: boolean | winston.Logform.TransformableInfo = format.transform(input);
+      const output: boolean | winston.Logform.TransformableInfo = formatter.transform(input);
 
       expect(output).toEqual(expect.objectContaining(input));
     });
