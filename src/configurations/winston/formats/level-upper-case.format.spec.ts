@@ -4,7 +4,7 @@ import { levelUpperCase } from "./level-upper-case.format";
 
 describe("levelUpperCase (Unit)", (): void => {
   describe("Success cases", (): void => {
-    const format: winston.Logform.Format = levelUpperCase();
+    const formatter: winston.Logform.Format = levelUpperCase();
 
     it.each([
       {
@@ -23,7 +23,7 @@ describe("levelUpperCase (Unit)", (): void => {
         expected: "  ERROR"
       }
     ])("$name", ({ input, expected }): void => {
-      expect(format.transform({ ...input, message: "Test" })).toEqual(
+      expect(formatter.transform({ ...input, message: "Test" })).toEqual(
         expect.objectContaining({ level: expected, message: "Test" })
       );
     });
