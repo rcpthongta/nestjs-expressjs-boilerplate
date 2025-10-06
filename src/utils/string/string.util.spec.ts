@@ -78,7 +78,7 @@ describe("StringUtil (Unit)", (): void => {
         transformer: undefined,
         expected: "Hello World"
       }
-    ])("$name", ({ args, template, expected, transformer }): void => {
+    ])("$name", ({ template, args, transformer, expected }): void => {
       expect(StringUtil.format(template, args, transformer)).toBe(expected);
     });
   });
