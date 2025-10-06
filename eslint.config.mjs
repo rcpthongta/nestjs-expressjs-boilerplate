@@ -28,6 +28,7 @@ const configuration = eslint.defineConfig(
     languageOptions: {
       globals: {
         ...globals.es2023,
+        ...globals.jest,
         ...globals.node
       }
     }
